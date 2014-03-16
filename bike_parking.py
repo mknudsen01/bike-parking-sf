@@ -1,5 +1,7 @@
 from flask import Flask, render_template
 import requests
+import app_bundle
+
 app = Flask(__name__)
 
 @app.route("/")
