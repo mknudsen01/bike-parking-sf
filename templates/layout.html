@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title>Bike Parking SF</title>
@@ -6,9 +7,15 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/normalize.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
   <script type="text/javascript" src="{{ url_for('static', filename='js/lib/jquery.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/lib/underscore.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/lib/backbone.js') }}"></script>
+
+
+  <script type="text/javascript" src="{{ url_for('static', filename='backbone/views/map.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='backbone/app.js') }}"></script>
 </head>
 <body>
   {% block content %}{% endblock %}
