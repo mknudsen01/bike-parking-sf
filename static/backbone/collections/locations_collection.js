@@ -13,8 +13,7 @@ LocationCollection = Backbone.Collection.extend({
     self = this
     this.fetch()
     .success(function(response){
-      console.log("It was a success")
-      self.addPins();
+      console.log("Fetched successfully")
     })
   },
 
@@ -22,8 +21,8 @@ LocationCollection = Backbone.Collection.extend({
     var self = this
     navigator.geolocation.getCurrentPosition(function(position){
       currentLocation = [position.coords.latitude, position.coords.longitude];
-      console.log(currentLocation);
       self.sendCoordinates(currentLocation);
+      self.addPins();
     })
   },
 
@@ -33,7 +32,6 @@ LocationCollection = Backbone.Collection.extend({
 
   addPins: function(){
     this.trigger('addPins', this.models)
-    console.log("IT DID THE THINGS AND PRINTED THIS")
   }
 
 

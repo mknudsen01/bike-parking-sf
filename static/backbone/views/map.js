@@ -19,7 +19,6 @@ var MapView = Backbone.View.extend({
     initialLocation = new google.maps.LatLng(coordinates[0], coordinates[1])
     this.map.setCenter(initialLocation);
     self.zoomOnCenter();
-    console.log("sup, DUDE")
   },
 
   zoomOnCenter: function(){
@@ -27,16 +26,38 @@ var MapView = Backbone.View.extend({
   },
 
   addPins: function(spots){
-
     self = this
-    console.log("Got the trigger")
-    _.each(spots, function(location){
-      var coordinates = location.get('coordinates')
-      var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(coordinates.latitude, coordinates.longitude),
-        map: self.map,
-        title: 'hello'
-      })
+    this.findDistanceOfSpots(spots, this.map.center);
+    sorted = this.collection.sortBy(function(model){
+      return model.get("distance")
+    })
+
+    var closestParking = []
+    for(i=0; i<10; i++){
+        if(sorted[i].get("location_name")){
+        closestParking.push(sorted[i]);
+      }
+    }
+
+    _.each(closestParking, function(closeSpot){
+      var coordinates = closeSpot.get('coordinates')
+        var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(coordinates.latitude, coordinates.longitude),
+          map: self.map,
+          title: closeSpot.get('location_name')
+        })
+    })
+  },
+
+  findDistanceOfSpots: function(spots, center){
+    self = this
+    var centerCoords = [center.k, center.A]
+    _.each(spots, function(spot){
+      var coordinates = spot.get('coordinates')
+      var from = new google.maps.LatLng(centerCoords[0], centerCoords[1])
+      var to   = new google.maps.LatLng(coordinates.latitude, coordinates.longitude);
+      var distance = google.maps.geometry.spherical.computeDistanceBetween(from, to);
+      spot.set('distance', distance)
     })
   }
 
