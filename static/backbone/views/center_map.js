@@ -2,11 +2,11 @@ CenterMapView = Backbone.View.extend({
   el: '.find-parking',
 
   events: {
-    'click ' : 'centerMap'
+    'click' : 'centerMap',
   },
 
   centerMap: function(e){
     e.preventDefault();
-    this.collection.trigger('findUserCoordinates')
+    this.collection.trigger('findUserCoordinates');
   }
 })

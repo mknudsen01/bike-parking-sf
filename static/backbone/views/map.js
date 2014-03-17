@@ -9,7 +9,9 @@ var MapView = Backbone.View.extend({
     }
 
     this.map = new google.maps.Map(this.el, mapOptions)
+    this.pins = [];
     this.listenTo(this.collection, 'setCenter', this.setCenter)
+    this.listenTo(this.collection, 'addPins', this.addPins)
   },
 
   setCenter: function(coordinates){
@@ -22,6 +24,20 @@ var MapView = Backbone.View.extend({
 
   zoomOnCenter: function(){
     this.map.setZoom(19);
+  },
+
+  addPins: function(spots){
+
+    self = this
+    console.log("Got the trigger")
+    _.each(spots, function(location){
+      var coordinates = location.get('coordinates')
+      var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(coordinates.latitude, coordinates.longitude),
+        map: self.map,
+        title: 'hello'
+      })
+    })
   }
 
 })
