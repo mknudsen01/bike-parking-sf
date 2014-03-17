@@ -13,8 +13,17 @@
   <script type="text/javascript" src="{{ url_for('static', filename='js/lib/underscore.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/lib/backbone.js') }}"></script>
 
+<!-- models -->
+  <script type="text/javascript" src="{{ url_for('static', filename='backbone/models/location_finder.js') }}"></script>
 
+<!-- collections -->
+  <script type="text/javascript" src="{{ url_for('static', filename='backbone/collections/locations_collection.js') }}"></script>
+
+
+<!-- views -->
+  <script type="text/javascript" src="{{ url_for('static', filename='backbone/views/center_map.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='backbone/views/map.js') }}"></script>
+<!-- app -->
   <script type="text/javascript" src="{{ url_for('static', filename='backbone/app.js') }}"></script>
 </head>
 <body>

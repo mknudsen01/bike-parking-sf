@@ -1,5 +1,11 @@
 BikeParkingApp = function(){
-  this.mapView = new MapView();
+  this.locations = new LocationCollection();
+  this.mapView = new MapView({
+    collection: this.locations
+  });
+  this.centerMapView = new CenterMapView({
+    collection: this.locations
+  });
 }
 
 $(document).ready(function(){
