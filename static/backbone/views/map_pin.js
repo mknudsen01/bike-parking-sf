@@ -1,4 +1,11 @@
 MapPinView = Backbone.View.extend({
+
+  el: $('.info'),
+
+  events: {
+    'click .show-directions': "showDirections"
+  },
+
   initialize: function(config){
     var self = this
     this.config = config;
@@ -26,8 +33,14 @@ MapPinView = Backbone.View.extend({
   },
 
   setContentString: function(){
-    content = '<h6>'+ this.config.spot.get('location_name') + '</h6>' +
-              '<a class="show-directions" href="#">Get Directions</a>';
+    content = '<div class="info">' +
+              '<h6>'+ this.config.spot.get('location_name') + '</h6>' +
+              '<a class="show-directions" href="#">Get Directions</a>'+
+              '</div>';
     return content
+  },
+
+  showDirections: function(){
+    console.log("It  made it happen!")
   }
 })
