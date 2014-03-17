@@ -40,12 +40,12 @@ var MapView = Backbone.View.extend({
     }
 
     _.each(closestParking, function(closeSpot){
-      var coordinates = closeSpot.get('coordinates')
-        var marker = new google.maps.Marker({
-          position: new google.maps.LatLng(coordinates.latitude, coordinates.longitude),
-          map: self.map,
-          title: closeSpot.get('location_name')
-        })
+      console.log("I did a thing")
+      var marker = new MapPinView({
+        collection: self.collection,
+        spot: closeSpot,
+        map: self.map
+      })
     })
   },
 
