@@ -16,7 +16,7 @@ DirectionsView = Backbone.View.extend({
     var request = {
         origin: origin,
         destination: destination,
-        travelMode: google.maps.TravelMode.BICYCLING
+        travelMode: google.maps.TravelMode.DRIVING
     };
     this.directionsService.route(request, function(result, status) {
       if (status == google.maps.DirectionsStatus.OK) {

@@ -1,9 +1,9 @@
 LocationCollection = Backbone.Collection.extend({
-  model: LocationFinder,
+  model: ParkingSpot,
   currentLocation: null,
   url: '/spots',
 
-  finder : new LocationFinder(),
+  parkingSpot : new ParkingSpot(),
   initialize: function(){
     this.fetchLocations();
     this.listenTo(this, 'findUserCoordinates', this.findUserCoordinates);
@@ -21,18 +21,16 @@ LocationCollection = Backbone.Collection.extend({
     var self = this;
     navigator.geolocation.getCurrentPosition(function(position){
       currentLocation = [position.coords.latitude, position.coords.longitude];
-      self.sendCoordinates(currentLocation);
+      self.setCenterLocation(currentLocation);
       self.addPins();
     });
   },
 
-  sendCoordinates: function(coordinates){
+  setCenterLocation: function(coordinates){
     this.trigger('setCenter', coordinates);
   },
 
   addPins: function(){
     this.trigger('addPins', this.models);
   }
-
-
-})
+});
