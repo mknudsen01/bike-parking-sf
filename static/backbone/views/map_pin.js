@@ -38,6 +38,9 @@ MapPinView = Backbone.View.extend({
   },
 
   showDirections: function(){
-    console.log("It  made it happen!");
+    this.directionsView = new DirectionsView({
+      map: self.map,
+      destination: this.marker
+    });
   }
 });
