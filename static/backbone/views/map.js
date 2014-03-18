@@ -15,8 +15,8 @@ var MapView = Backbone.View.extend({
   },
 
   setCenter: function(coordinates){
-    self = this
-    initialLocation = new google.maps.LatLng(coordinates[0], coordinates[1])
+    self = this;
+    initialLocation = new google.maps.LatLng(coordinates[0], coordinates[1]);
     this.map.setCenter(initialLocation);
     self.zoomOnCenter();
   },
@@ -26,13 +26,13 @@ var MapView = Backbone.View.extend({
   },
 
   addPins: function(spots){
-    self = this
+    self = this;
     this.findDistanceOfSpots(spots, this.map.center);
     sorted = this.collection.sortBy(function(model){
-      return model.get("distance")
-    })
+      return model.get("distance");
+    });
 
-    var closestParking = []
+    var closestParking = [];
     for(i=0; i<10; i++){
         if(sorted[i].get("location_name")){
         closestParking.push(sorted[i]);
@@ -40,25 +40,25 @@ var MapView = Backbone.View.extend({
     }
 
     _.each(closestParking, function(closeSpot){
-      console.log("I did a thing")
+      console.log("I did a thing");
       var marker = new MapPinView({
         collection: self.collection,
         spot: closeSpot,
         map: self.map
-      })
-    })
+      });
+    });
   },
 
   findDistanceOfSpots: function(spots, center){
-    self = this
-    var centerCoords = [center.k, center.A]
+    self = this;
+    var centerCoords = [center.k, center.A];
     _.each(spots, function(spot){
-      var coordinates = spot.get('coordinates')
-      var from = new google.maps.LatLng(centerCoords[0], centerCoords[1])
+      var coordinates = spot.get('coordinates');
+      var from = new google.maps.LatLng(centerCoords[0], centerCoords[1]);
       var to   = new google.maps.LatLng(coordinates.latitude, coordinates.longitude);
       var distance = google.maps.geometry.spherical.computeDistanceBetween(from, to);
-      spot.set('distance', distance)
-    })
+      spot.set('distance', distance);
+    });
   }
 
 })
