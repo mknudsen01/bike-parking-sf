@@ -6,12 +6,12 @@ var MapView = Backbone.View.extend({
     var mapOptions = {
       center: new google.maps.LatLng(37.7577,-122.4376),
       zoom: 14
-    }
+    };
 
-    this.map = new google.maps.Map(this.el, mapOptions)
+    this.map = new google.maps.Map(this.el, mapOptions);
     this.pins = [];
-    this.listenTo(this.collection, 'setCenter', this.setCenter)
-    this.listenTo(this.collection, 'addPins', this.addPins)
+    this.listenTo(this.collection, 'setCenter', this.setCenter);
+    this.listenTo(this.collection, 'addPins', this.addPins);
   },
 
   setCenter: function(coordinates){
