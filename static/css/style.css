@@ -24,3 +24,7 @@ html, body {
   height:100%;
   width:100%;
 }
+
+#list-steps{
+  z-index: 2;
+}

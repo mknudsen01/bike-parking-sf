@@ -8,7 +8,7 @@ InfoWindowView = Backbone.View.extend({
               '<a class="show-directions" href="#">Get Directions</a>');
   },
   showDirections: function(){
-    this.trigger('stuff');
+    this.trigger('show');
   }
 
 

@@ -12,7 +12,7 @@ DirectionsView = Backbone.View.extend({
   },
 
   calculateRoute: function(origin, destination){
-    self = this
+    self = this;
     var request = {
         origin: origin,
         destination: destination,
@@ -20,8 +20,19 @@ DirectionsView = Backbone.View.extend({
     };
     this.directionsService.route(request, function(result, status) {
       if (status == google.maps.DirectionsStatus.OK) {
+
         self.directionsDisplay.setDirections(result);
+        self.listSteps(result);
       }
     });
+  },
+
+  listSteps: function(directionsResult){
+    var list = [];
+    steps = directionsResult.routes[0].legs[0].steps;
+    _.each(steps, function(step){
+      list.push(step.instructions);
+    });
+    var stepsList = new DirectionsListView({list: list});
   }
 });
