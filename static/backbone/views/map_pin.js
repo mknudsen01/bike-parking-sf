@@ -28,7 +28,7 @@ MapPinView = Backbone.View.extend({
     this.infoWindow.open(this.marker.map, this.marker);
 
     this.infoView = new InfoWindowView({config: this.config});
-    this.listenTo(this.infoView, 'stuff', this.showDirections);
+    this.listenTo(this.infoView, 'show', this.showDirections);
   },
 
   setContentString: function(){
