@@ -11,7 +11,6 @@ CenterMapView = Backbone.View.extend({
   },
 
   hideButton: function(){
-
     this.$el.toggle();
   }
 });

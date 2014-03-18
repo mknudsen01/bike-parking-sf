@@ -13,6 +13,7 @@
 
 html, body {
   height: 100%;
+  background-color: #EFEFEF;
 }
 
 #map-container{
@@ -26,5 +27,12 @@ html, body {
 }
 
 #list-steps{
-  z-index: 2;
+  position: absolute;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-left: 2%;
+  margin-top: 2%;
+  width: 26%;
 }
