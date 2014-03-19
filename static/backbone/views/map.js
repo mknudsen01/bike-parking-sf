@@ -2,56 +2,62 @@ var MapView = Backbone.View.extend({
   el: '#map-canvas',
 
   initialize: function(){
-
     var mapOptions = {
       center: new google.maps.LatLng(37.7577,-122.4376),
       zoom: 14
     };
-
     this.map = new google.maps.Map(this.el, mapOptions);
 
     this.pins = [];
 
-
     this.listenTo(this.collection, 'setCenter', this.setCenter);
     this.listenTo(this.collection, 'addPins', this.addPins);
-    this.listenTo(this.collection, 'removePins', this.clearMarkers);
   },
 
   setCenter: function(coordinates){
     var self = this;
     initialLocation = new google.maps.LatLng(coordinates[0], coordinates[1]);
     this.map.setCenter(initialLocation);
+    this.addCenterMarker(initialLocation);
     self.zoomOnCenter();
   },
 
   zoomOnCenter: function(){
-    this.map.setZoom(19);
+    this.map.setZoom(16);
+  },
+
+  addCenterMarker: function(location){
+    var self = this;
+    var pin = new google.maps.Marker({
+      position: location,
+      map: this.map
+    });
+
+    this.pushToPins(pin);
   },
 
 
   // Add a marker to the map and push to the array.
-  addMarker: function(location) {
+  addPin: function(location) {
     var self = this;
-    var marker = new google.maps.Marker({
+    var pin = new google.maps.Marker({
       position: new google.maps.LatLng(location.get('coordinates').latitude, location.get('coordinates').longitude),
       map: this.map
     });
-    this.pins.push(marker);
 
-    var contentString = this.setContentString();
+    this.pushToPins(pin);
+    this.createInfoWindow();
+    this.addListenerForInfoWindow(pin);
+  },
+
+
+  pushToPins: function(pin){
+    this.pins.push(pin);
+  },
+
+  createInfoWindow: function(){
     this.infoWindow = new google.maps.InfoWindow({
-      content: contentString
-
-    });
-
-
-    google.maps.event.addListener(marker, 'click', function() {
-      self.infoWindow.open(this.map, marker);
-      $('.show-directions').on('click', function(){
-        self.showDirections(marker);
-        self.clearMarkers();
-      });
+      content: this.setContentString()
     });
   },
 
@@ -62,7 +68,23 @@ var MapView = Backbone.View.extend({
     return content;
   },
 
-  // Sets the map on all markers in the array.
+  addListenerForInfoWindow: function(pin){
+    var self = this;
+    google.maps.event.addListener(pin, 'click', function(){
+      self.infoWindow.open(this.map, pin);
+      self.addListenerForInfoWindowLink(pin);
+    });
+  },
+
+  addListenerForInfoWindowLink: function(pin){
+    var self = this;
+    $('.show-directions').on('click', function(){
+      self.showDirections(pin);
+      self.clearPins();
+    });
+  },
+
+  // Set the map of each marker in the array.
   setAllMap: function(map) {
     for (var i = 0; i < this.pins.length; i++) {
       this.pins[i].setMap(map);
@@ -70,39 +92,31 @@ var MapView = Backbone.View.extend({
   },
 
   // Removes the markers from the map, but keeps them in the array.
-  clearMarkers: function() {
-    console.log("Got the call, homes");
+  clearPins: function() {
     this.setAllMap(null);
-  },
-
-  // Shows any markers currently in the array.
-  showMarkers: function() {
-    this.setAllMap(map);
-  },
-
-  // Deletes all markers in the array by removing references to them.
-  deleteMarkers: function() {
-    this.clearMarkers();
-    this.pins = [];
   },
 
   addPins: function(spots){
     var self = this;
     this.findDistanceOfSpots(spots, this.map.center);
-    sorted = this.collection.sortBy(function(model){
+
+    sortedByDistance = this.collection.sortBy(function(model){
       return model.get("distance");
     });
 
-    var closestParking = [];
-    for(i=0; i<10; i++){
-        if(sorted[i].get("location_name")){
-        closestParking.push(sorted[i]);
-      }
-    }
+    closestParking = this.takeClosestTen(sortedByDistance);
 
     _.each(closestParking, function(closeSpot){
-      self.addMarker(closeSpot);
+      self.addPin(closeSpot);
     });
+  },
+
+  takeClosestTen: function(collection){
+    var closestResults = [];
+    for(i=0; i<10; i++){
+      closestResults.push(collection[i]);
+    }
+    return closestResults;
   },
 
   showDirections: function(destination){
@@ -113,19 +127,16 @@ var MapView = Backbone.View.extend({
   },
 
   findDistanceOfSpots: function(spots, center){
+    //finds distance and sets a 'distance' attribute for each spot
     var self = this;
-    var centerCoords = [center.k, center.A];
+    var centerLatitude = center.k;
+    var centerLongitude = center.A;
     _.each(spots, function(spot){
       var coordinates = spot.get('coordinates');
-      var from = new google.maps.LatLng(centerCoords[0], centerCoords[1]);
+      var from = new google.maps.LatLng(centerLatitude, centerLongitude);
       var to   = new google.maps.LatLng(coordinates.latitude, coordinates.longitude);
       var distance = google.maps.geometry.spherical.computeDistanceBetween(from, to);
       spot.set('distance', distance);
     });
-  },
-
-  removePin: function(){
-    setAllMap(null);
   }
-
 });
