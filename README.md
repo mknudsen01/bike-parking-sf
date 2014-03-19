@@ -10,17 +10,17 @@ Find it on [Heroku](http://sf-bike-parking.herokuapp.com/)
 ##Stack
 
 ###Back-end
-[Flask](http://flask.pocoo.org/)
-[Requests](http://docs.python-requests.org/en/latest/)
-[San Francisco Data](https://data.sfgov.org/Other/SF-data/y55j-7d7d)
+* [Flask](http://flask.pocoo.org/)
+* [Requests](http://docs.python-requests.org/en/latest/)
+* [San Francisco Data](https://data.sfgov.org/Other/SF-data/y55j-7d7d)
 
 I used a minimal backend. I only have two routes for my Flask app--one for the home route, and one for the call to SF Data for bicycle parking locations. At Dev Bootcamp, we learned to code with [Sinatra](http://www.sinatrarb.com/), which is a light-weight framework, before we jumped into Rails. Since I've never used Python before, I wanted my first experience with the language to be with a lighter framework. I had heard about Flask before, and after some research, I saw that it was indeed light-weight.
 
 I also used Requests in order to make simpler HTTPrequests with Python. This made it possible for me to obtain my data from the SF Data API.
 
 ###Front-end
-[Backbone.js](http://backbonejs.org/)
-[Google Maps JavaScript API v3](https://developers.google.com/maps/documentation/javascript/)
+* [Backbone.js](http://backbonejs.org/)
+* [Google Maps JavaScript API v3](https://developers.google.com/maps/documentation/javascript/)
 
 We've had some short discussions about JavaScript front-end frameworks like Angular, Ember and Backbone, but I had never used them. It was new for me to have controller logic go into the view, so that took some getting used to. It still feels a bit clumsy, but I look forward to using Backbone for my future projects.
 
