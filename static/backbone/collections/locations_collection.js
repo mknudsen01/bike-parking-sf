@@ -11,10 +11,7 @@ LocationCollection = Backbone.Collection.extend({
 
   fetchLocations: function(){
     self = this;
-    this.fetch()
-    .success(function(response){
-      console.log("Fetched successfully");
-    });
+    this.fetch();
   },
 
   findUserCoordinates: function(){

@@ -2,12 +2,26 @@ DirectionsListView = Backbone.View.extend({
   el: '#list-steps',
 
   initialize: function(steps){
-    self = this;
+    this.mapContainer = '#map-container';
+
+    this.formatList(steps);
+    this.showDirectionsList();
+    this.moveMapToRight(this.mapContainer);
+  },
+
+  formatList: function(steps){
+    var self = this;
     _.each(steps.list, function(step){
       self.$el.append('<p>'+step+'</p></br>');
     });
-    self.$el.toggleClass('hidden');
-    $('#map-container').css('width', '70%');
-    $('#map-container').css('float', 'right');
+  },
+
+  showDirectionsList: function(){
+    this.$el.toggleClass('hidden');
+  },
+
+  moveMapToRight: function(map){
+    $(map).css('width', '70%');
+    $(map).css('float', 'right');
   }
 });
