@@ -6,7 +6,7 @@ BikeParkingApp = function(){
   this.findParkingButton = new FindParkingButton({
     collection: this.locations
   });
-}
+};
 
 $(document).ready(function(){
   app = new BikeParkingApp();
