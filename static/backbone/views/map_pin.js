@@ -10,25 +10,6 @@ MapPinView = Backbone.View.extend({
       map: self.config.map,
       title: self.config.spot.get('location_name')
     });
-
-    var contentString = this.setContentString();
-    this.infoWindow = new google.maps.InfoWindow({
-      content: contentString
-    });
-
-
-    google.maps.event.addListener(this.marker, 'click', function() {
-      self.trigger('showInfo');
-    });
-
-    self.listenTo(self, 'showInfo', self.showInfo);
-  },
-
-  showInfo: function(){
-    this.infoWindow.open(this.marker.map, this.marker);
-
-    this.infoView = new InfoWindowView({config: this.config});
-    this.listenTo(this.infoView, 'show', this.showDirections);
   },
 
   setContentString: function(){
@@ -37,10 +18,19 @@ MapPinView = Backbone.View.extend({
     return content;
   },
 
+  presentDirections: function(){
+    this.removePins();
+    this.showDirections();
+  },
+
+  removePins: function(){
+    setAllMap(null);
+  },
+
   showDirections: function(){
     this.directionsView = new DirectionsView({
-      map: self.map,
-      destination: this.marker
+      map: this.config.map,
+      destination: this.marker,
     });
   }
 });

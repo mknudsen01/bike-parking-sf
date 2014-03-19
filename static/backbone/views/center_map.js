@@ -1,4 +1,4 @@
-CenterMapView = Backbone.View.extend({
+FindParkingButton = Backbone.View.extend({
   el: '.find-parking',
   events: {
     'click' : 'centerMap',
